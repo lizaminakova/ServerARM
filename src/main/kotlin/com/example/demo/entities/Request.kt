@@ -6,43 +6,43 @@ import org.hibernate.type.SqlTypes
 
 @Entity
 @Table(name = "request")
-open class Request (
+class Request (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    var id: Int? = null,
+    var id: Int,
 
     @JdbcTypeCode(SqlTypes.INTEGER)
     @Column(name = "request_number")
-    var requestNumber: String? = null,
+    var requestNumber: Int,
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "request_name")
-    var requestName: String? = null,
+    var requestName: String?,
 
     @JdbcTypeCode(SqlTypes.DATE)
     @Column(name = "creation_date", length = 10)
-    var creationDate: String? = null,
+    var creationDate: String?,
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "customer", length = 100)
-    var customer: String? = null,
+    var customer: String?,
 
     @JdbcTypeCode(SqlTypes.DATE)
     @Column(name = "expected_date", length = 10)
-    var expectedDate: String? = null,
+    var expectedDate: String?,
 
     @JdbcTypeCode(SqlTypes.DATE)
     @Column(name = "actual_date", length = 10)
-    var actualDate: String? = null,
+    var actualDate: String?,
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    var user: User? = null,
+    var user: User?,
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    var status: Status? = null,
+    var status: Status?,
 
     @JoinTable
     @OneToMany
