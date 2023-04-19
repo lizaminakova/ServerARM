@@ -44,7 +44,4 @@ class Request (
     @JoinColumn(name = "status_id")
     var status: Status?,
 
-    @JoinTable
-    @OneToMany
-    val products: Set<Products>
 )
