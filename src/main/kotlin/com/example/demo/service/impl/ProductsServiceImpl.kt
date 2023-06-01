@@ -1,6 +1,6 @@
 package com.example.demo.service.impl
 
-import com.example.demo.entities.Products
+import com.example.demo.model.Products
 import com.example.demo.repository.ProductsRepository
 import com.example.demo.service.ProductsService
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +24,7 @@ class ProductsServiceImpl: ProductsService {
         return productRepository.saveAndFlush(products)
     }
 
-    override fun getAllProducts(products: ArrayList<Products>): List<Products> {
+    override fun getAllProducts(): List<Products> {
         return productRepository.findAll()
     }
 

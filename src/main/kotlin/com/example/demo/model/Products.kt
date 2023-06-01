@@ -1,4 +1,4 @@
-package com.example.demo.entities
+package com.example.demo.model
 
 import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
