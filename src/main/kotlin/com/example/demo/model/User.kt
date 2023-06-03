@@ -10,15 +10,15 @@ class User (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    var id: Int,
+    var id: Int?=null,
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Column(name = "user_name")
-    var userName: String?,
+    @Column(name = "username")
+    var username: String?,
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Column(name = "login")
-    var login: String?,
+    @Column(name = "email")
+    var email: String?,
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "password")

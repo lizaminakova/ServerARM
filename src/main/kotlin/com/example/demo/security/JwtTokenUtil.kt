@@ -1,6 +1,7 @@
 package com.example.demo.security
 
 import com.example.demo.model.User
+import com.example.demo.service.impl.UserDetailsServiceImpl
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
 import lombok.RequiredArgsConstructor
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
 import java.lang.String.format
 import java.nio.charset.StandardCharsets
@@ -17,7 +17,7 @@ import java.util.*
 
 @Component
 @RequiredArgsConstructor
-class JwtTokenUtil(private val userDetailsService: UserDetailsService) {
+class JwtTokenUtil(private val userDetailsService: UserDetailsServiceImpl) {
     private val jwtIssuer = "mosit"
 
     @Value("\${jwt.token.secret}")
@@ -29,7 +29,7 @@ class JwtTokenUtil(private val userDetailsService: UserDetailsService) {
         }
 
     fun generateAccessToken(user: User): String {
-        return Jwts.builder().setSubject(format("%s,%s", user.id, user.login)).setIssuer(jwtIssuer).setIssuedAt(
+        return Jwts.builder().setSubject(format("%s,%s", user.id, user.email)).setIssuer(jwtIssuer).setIssuedAt(
             Date()
         ).setExpiration(Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000)) // 2 days
             .signWith(signingKey).compact()

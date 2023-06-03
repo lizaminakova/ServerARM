@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -23,45 +24,47 @@ class UserServiceImpl : UserService {
 
     @Autowired
     lateinit var jwtTokenUtil: JwtTokenUtil
-
+    @Autowired
+    lateinit var passwordEncoder: PasswordEncoder
     @Autowired
     lateinit var userRepository: UserRepository
     lateinit var mailSender: JavaMailSender
-    override fun getAllUser(user: ArrayList<User>): List<User> {
+    override fun getAllUser(): List<User> {
         return userRepository.findAll()
     }
 
     @Throws(RuntimeException::class)
-    override fun findByLogin(login: String?): User? {
-        return userRepository.findUserByLogin(login).get()
+    override fun findByEmail(email: String?): Optional<User> {
+        return userRepository.findUserByEmail(email)
     }
 
     override fun register(user: User) {
-        if (findByLogin(user.login) == null) {
+        if (findByEmail(user.email).isEmpty) {
+            user.password = passwordEncoder.encode(user.password)
             userRepository.saveAndFlush(user)
         } else {
-            throw MyException("Пользователь с таким логином уже существует")
+            throw MyException("Пользователь с такой электронной почтой уже существует")
         }
     }
 
-    override fun login(login: String, password: String): JwtResponse? {
-        val userCandidate: Optional<User> = userRepository.findUserByLogin(login)
+    override fun login(email: String, password: String): JwtResponse? {
+        val userCandidate: Optional<User> = userRepository.findUserByEmail(email)
 
         if (userCandidate.isPresent) {
             val user: User = userCandidate.get()
             val authentication = authenticationManager.authenticate(
-                UsernamePasswordAuthenticationToken(login, password)
+                UsernamePasswordAuthenticationToken(email, password)
             )
             SecurityContextHolder.getContext().authentication = authentication
             val jwt: String = jwtTokenUtil.generateAccessToken(user)
             val authorities: List<GrantedAuthority> = ArrayList()
-            return JwtResponse(jwt, login, authorities)
+            return JwtResponse(jwt, email, authorities)
         } else {
             return null
         }
     }
 
-    override fun forgotPassword(login: String) {
+    override fun forgotPassword(email: String) {
 //        var currentUser = userRepository.findUserByLogin(login)
 //        if (currentUser == null) {
 //            String.format("Пользователь с таким логином не найден: ", login)

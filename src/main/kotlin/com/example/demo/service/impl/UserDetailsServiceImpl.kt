@@ -14,12 +14,12 @@ class UserDetailsServiceImpl(private val userRepository: UserRepository) : UserD
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(s: String): UserDetails {
         val user =
-            userRepository.findUserByLogin(s).orElseThrow { UsernameNotFoundException("The username $s doesn't exist") }
+            userRepository.findUserByEmail(s).orElseThrow { UsernameNotFoundException("The email $s doesn't exist") }
 
         val authorities = ArrayList<GrantedAuthority>()
 
         return User(
-            user.login, user.password, authorities
+            user.email, user.password, authorities
         )
     }
 }

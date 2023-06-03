@@ -10,7 +10,7 @@ class Products (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    var id: Int,
+    var id: Int?=null,
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "product_name")

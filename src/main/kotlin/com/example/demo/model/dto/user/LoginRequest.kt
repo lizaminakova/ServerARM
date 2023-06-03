@@ -1,4 +1,4 @@
-package com.example.demo.model.dto
+package com.example.demo.model.dto.user
 
 import lombok.Data
 import org.jetbrains.annotations.NotNull
@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull
 class LoginRequest {
 
     @NotNull
-    lateinit var login: String
+    lateinit var email: String
 
     @NotNull
     lateinit var password: String

@@ -21,7 +21,14 @@ class ProductsServiceImpl: ProductsService {
     }
 
     override fun editProducts(products: Products): Products {
-        return productRepository.saveAndFlush(products)
+        val existingProduct = productRepository.findById(products.id!!)
+        if (existingProduct.isPresent) {
+            val updatedProduct = existingProduct.get()
+            updatedProduct.productName = products.productName
+            return productRepository.saveAndFlush(updatedProduct)
+        } else {
+            throw RuntimeException("Product with id ${products.id} not found")
+        }
     }
 
     override fun getAllProducts(): List<Products> {

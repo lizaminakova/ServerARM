@@ -1,12 +1,12 @@
 package com.example.demo.repository
 
-import com.example.demo.entities.User
+import com.example.demo.model.User
 import org.springframework.data.jpa.repository.JpaRepository
+import java.util.*
 
 interface UserRepository: JpaRepository<User, Int> {
-    fun findUserByLogin(login: String?): User?
+    fun findUserByEmail(email: String?): Optional<User>
 
     fun findUserById(id: Long): User
 
-    fun findUserByName(userName: String): User
 }
