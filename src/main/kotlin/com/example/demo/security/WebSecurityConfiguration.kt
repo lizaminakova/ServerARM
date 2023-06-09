@@ -54,12 +54,11 @@ class WebSecurityConfiguration(private val userDetailsService: UserDetailsServic
             .csrf().disable()
             .authorizeHttpRequests()
             .requestMatchers("/users/**").permitAll()
-            .anyRequest().permitAll()
+            .anyRequest().fullyAuthenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter::class.java)
-
         return http.build()
     }
 

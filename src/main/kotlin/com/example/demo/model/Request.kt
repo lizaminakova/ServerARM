@@ -10,7 +10,7 @@ class Request (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    var id: Int,
+    var id: Int?=null,
 
     @JdbcTypeCode(SqlTypes.INTEGER)
     @Column(name = "request_number")
@@ -20,7 +20,7 @@ class Request (
     @Column(name = "request_name")
     var requestName: String?,
 
-    @JdbcTypeCode(SqlTypes.DATE)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "creation_date", length = 10)
     var creationDate: String?,
 
@@ -28,11 +28,11 @@ class Request (
     @Column(name = "customer", length = 100)
     var customer: String?,
 
-    @JdbcTypeCode(SqlTypes.DATE)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "expected_date", length = 10)
     var expectedDate: String?,
 
-    @JdbcTypeCode(SqlTypes.DATE)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "actual_date", length = 10)
     var actualDate: String?,
 
@@ -40,8 +40,8 @@ class Request (
     @JoinColumn(name = "user_id")
     var user: User?,
 
-    @ManyToOne
-    @JoinColumn(name = "status_id")
-    var status: Status?,
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(name = "status", length = 10)
+    var status: String?,
 
     )

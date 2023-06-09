@@ -34,14 +34,8 @@ class UserController(
         val login = request.email
         val password = request.password
 
-        if (login == null || password == null) {
-            throw IllegalArgumentException("Login and password are required")
-        }
-
         val success = userService.login(login, password)
-
-        if (success == null)
-            return ResponseEntity(ResponseMessage("User not exist"),HttpStatus.UNAUTHORIZED)
+            ?: return ResponseEntity(ResponseMessage("User not exist"),HttpStatus.UNAUTHORIZED)
 
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, success.accessToken).body("")
 

@@ -21,8 +21,8 @@ class JwtTokenFilter(
         val token = authorizationHeader.substring("Bearer ".length) ?: return filterChain.doFilter(request, response)
 
         if (jwtTokenUtil.validate(token)) {
-            val id = jwtTokenUtil.getUserId(token)
-            val authentication: Authentication = jwtTokenUtil.getAuthentication(id)
+            val username = jwtTokenUtil.getUsername(token)
+            val authentication: Authentication = jwtTokenUtil.getAuthentication(username)
             SecurityContextHolder.getContext().authentication = authentication
         }
 

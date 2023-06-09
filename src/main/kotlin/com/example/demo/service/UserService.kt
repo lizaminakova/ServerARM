@@ -1,6 +1,7 @@
 package com.example.demo.service
 
 import com.example.demo.controller.JwtResponse
+import com.example.demo.model.Request
 import com.example.demo.model.User
 import java.util.*
 
@@ -13,4 +14,5 @@ interface UserService {
     fun register(user: User)
 
     fun forgotPassword(email: String)
+
 }
